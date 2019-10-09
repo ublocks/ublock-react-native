@@ -1,0 +1,69 @@
+{
+  "name": "ublocks-react-native",
+  "version": "0.0.1",
+  "description": "a collection of React Native packages by uBlocks.",
+  "main": "index.js",
+  "files": [
+    "@App"
+  ],
+  "scripts": {
+    "prepare": "yarn run lerna:link && lerna run prepare",
+    "lerna:bootstrap": "lerna bootstrap",
+    "lerna:link": "lerna link && lerna exec -- yarn link",
+    "lerna:clean": "lerna clean",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "react-native-size-matters": "^0.2.1",
+    "react-native-vector-icons": "^6.6.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.4.0",
+    "jest": "^24.9.0",
+    "lerna": "^3.16.5",
+    "react": "16.9.0",
+    "react-native": "0.61.1",
+    "react-test-renderer": "16.9.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "lint-staged": {
+    "packages/**/*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "tests/**/*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ublocks/ublock-react-native.git"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "author": "Kent Chen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ublocks/ublock-react-native/issues"
+  },
+  "homepage": "https://github.com/ublocks/ublock-react-native#readme",
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "packages/example/project",
+      "tests"
+    ]
+  }
+}

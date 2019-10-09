@@ -2,5 +2,17 @@
   "packages": [
     "packages/*"
   ],
+  "npmClient": "yarn",
+  "npmClientArgs": [
+    "--no-lockfile"
+  ],
+  "useWorkspaces": true,
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        "*.md"
+      ]
+    }
+  },
   "version": "1.0.0-alpha.0"
 }

@@ -2,12 +2,9 @@
   "name": "@ublocks-react-native/component",
   "version": "1.0.0-alpha.0",
   "author": "Kent Chen",
-  "description": "",
+  "description": "The component collection of ublocks",
   "main": "lib/index.js",
   "scripts": {
-    "build": "genversion --semi lib/version.js",
-    "build:clean": "rimraf android/build && rimraf ios/build",
-    "prepare": "yarn run build"
   },
   "repository": {
     "type": "git",
@@ -16,17 +13,19 @@
   "license": "Apache-2.0",
   "keywords": [
     "react",
-    "react-native"
+    "react-native",
+    "ui-kit",
+    "component"
   ],
   "peerDependencies": {
     "@ublocks-react-native/helper": "*",
-    "react-native-router-flux": "*",
-    "react-native-size-matters": "^0.2.1"
+    "react-native-router-flux": "4.1.0-beta.8",
+    "react-native-vector-icons": "^6.6.0"
   },
   "devDependencies": {
-    "prop-types": "*",
-    "react": "*",
-    "react-native": "*"
+    "prop-types": "^15.7.2",
+    "react": "16.9.0",
+    "react-native": "0.61.2"
   },
   "publishConfig": {
     "access": "public"

@@ -2,12 +2,9 @@
   "name": "@ublocks-react-native/helper",
   "version": "1.0.0-alpha.0",
   "author": "Kent Chen",
-  "description": "",
+  "description": "ublocks core package.",
   "main": "lib/index.js",
   "scripts": {
-    "build": "genversion --semi lib/version.js",
-    "build:clean": "rimraf android/build && rimraf ios/build",
-    "prepare": "yarn run build"
   },
   "repository": {
     "type": "git",
@@ -20,6 +17,11 @@
   ],
   "peerDependencies": {
     "react-native-size-matters": "^0.2.1"
+  },
+  "devDependencies": {
+    "prop-types": "*",
+    "react": "*",
+    "react-native": "*"
   },
   "publishConfig": {
     "access": "public"
