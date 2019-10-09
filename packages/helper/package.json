@@ -1,11 +1,10 @@
 {
   "name": "@ublocks-react-native/helper",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.1-alpha.0",
   "author": "Kent Chen",
   "description": "ublocks core package.",
   "main": "lib/index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/ublocks/ublock-react-native/tree/master/packages/helper"
