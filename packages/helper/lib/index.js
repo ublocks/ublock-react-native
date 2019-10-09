@@ -1,4 +1,2 @@
-import ScreenHelper from './Screen';
-
-export const { ScaledSheet } = require('react-native-size-matters/extend');
-export const Screen = ScreenHelper;
+export { ScaledSheet } from 'react-native-size-matters/extend';
+export { default as Screen } from './Screen';
