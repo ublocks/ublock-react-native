@@ -1,6 +1,7 @@
 {
   "name": "ublocks-react-native",
   "version": "0.0.1",
+  "private": true,
   "description": "a collection of React Native packages by uBlocks.",
   "main": "index.js",
   "files": [
