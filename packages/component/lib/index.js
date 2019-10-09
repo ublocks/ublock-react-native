@@ -1,36 +1,20 @@
 // import CircleGauge from './CircleGauge';
 // export { CircleGauge };
-// export * from './GridView';
-// export { GridView };
-
-// import IconButton from './IconButton';
-// export { IconButton };
-
-// import IconTextInput from './IconTextInput';
-// export { IconTextInput };
-
-// import ImageButton from './ImageButton';
-// export { ImageButton };
 
 // import InsideWebView from './InsideWebView';
 // export { InsideWebView };
-
-// import LinkButton from './LinkButton';
-// export { LinkButton };
-
-// import LoadingIndicator from './LoadingIndicator';
-// export { LoadingIndicator };
-
-// import RoundButton from './RoundButton';
-// export { RoundButton };
-
-// import StripeView from './StripeView';
-// export { StripeView };
-
-export { default as NavBar } from './NavBar';
-// export { NavBar };
 
 // import LottieButton from './LottieButton';
 // export { LottieButton };
 
 // import Alert from './Alert';
+
+export { default as GridView } from './GridView';
+export { default as IconButton } from './IconButton';
+export { default as IconTextInput } from './IconTextInput';
+export { default as ImageButton } from './ImageButton';
+export { default as LinkButton } from './LinkButton';
+export { default as LoadingIndicator } from './LoadingIndicator';
+export { default as NavBar } from './NavBar';
+export { default as RoundButton } from './RoundButton';
+export { default as StripeView } from './StripeView';
