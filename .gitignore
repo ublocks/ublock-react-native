@@ -578,3 +578,15 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/node,xcode,macos,gradle,windows,android,fastlane,reactnative,androidstudio,visualstudiocode
+
+.idea/**/*
+**/Pods/**
+**/dist/
+**/version.js
+.tmp
+
+google-services.json
+GoogleService-Info.plist
+
+# generated file
+RNFBVersion.m
