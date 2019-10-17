@@ -31,5 +31,8 @@
   },
   "directories": {
     "lib": "lib"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
   }
 }
