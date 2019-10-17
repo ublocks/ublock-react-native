@@ -1,6 +1,6 @@
 {
   "name": "@ublocks-react-native/helper",
-  "version": "1.0.2-alpha.0",
+  "version": "1.0.2-alpha.1",
   "author": "Kent Chen",
   "description": "ublocks core package.",
   "main": "lib/index.js",
