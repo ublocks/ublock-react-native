@@ -69,7 +69,7 @@ const styles = ScaledSheet.create({
 
 class NavBar extends Component {
   static propTypes = {
-    appRoute: PropTypes.object.isRequired,
+    drawerStatus: PropTypes.string,
     numberOfLines: PropTypes.number,
     leftComponent: PropTypes.any,
     rightComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
@@ -97,6 +97,7 @@ class NavBar extends Component {
   };
 
   static defaultProps = {
+    drawerStatus: 'DrawerClose',
     title: '',
     titleStyle: {},
     titleColor: 'black',
@@ -123,12 +124,8 @@ class NavBar extends Component {
   };
 
   onMenuPress = () => {
-    const {
-      appRoute: {
-        scene: { drawer },
-      },
-    } = this.props;
-    if (drawer === 'DrawerClose') {
+    const { drawerStatus } = this.props;
+    if (drawerStatus === 'DrawerClose') {
       Actions.drawerOpen();
     } else {
       Actions.drawerClose();
@@ -291,10 +288,3 @@ class NavBar extends Component {
 }
 
 export default NavBar;
-
-// connect(
-//   (state, props) => ({
-//     appRoute: state.appRoute,
-//   }),
-//   (dispatch) => bindActionCreators({}, dispatch),
-// )(NavBar);
