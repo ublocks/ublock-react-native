@@ -47,7 +47,7 @@ export default class RoundButton extends Component {
 
   static defaultProps = {
     // button props
-    onPress: undefined,
+    onPress: () => {},
     onPressIn: undefined,
     onPressOut: undefined,
     onLongPress: undefined,
@@ -88,7 +88,6 @@ export default class RoundButton extends Component {
       delayLongPress,
       delayPressIn,
       delayPressOut,
-      style,
       color,
       style: btnStyle,
       text,
@@ -106,7 +105,6 @@ export default class RoundButton extends Component {
       <TouchableOpacity
         style={[
           styles.button,
-          btnStyle,
           {
             opacity: disabled ? 0.2 : 1,
           },
@@ -117,8 +115,8 @@ export default class RoundButton extends Component {
                 height: 'auto',
                 borderWidth: 0,
                 borderRadius: 0,
-                borderColor: 'translucent',
-                backgroundColor: 'translucent',
+                borderColor: 'transparent',
+                backgroundColor: 'transparent',
               }
             : {
                 backgroundColor: color,
@@ -127,21 +125,8 @@ export default class RoundButton extends Component {
                   ? Screen.scale(isNumber(roundRadius) ? roundRadius : 10)
                   : 0,
               },
-          style,
+          btnStyle,
         ]}
-        // onPress={() => {
-        //   if (!disabled) {
-        //     if (!this.btnClick) {
-        //       this.btnClick = true;
-        //       if (onPress) {
-        //         onPress();
-        //       }
-        //       setTimeout(() => {
-        //         this.btnClick = false;
-        //       }, 300);
-        //     }
-        //   }
-        // }}
         onPress={disabled ? () => {} : debounce(onPress, 400)}
         activeOpacity={disabled ? 1 : 0.2}
         hitSlop={hitSlop}
