@@ -1,14 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { TouchableOpacity, StyleSheet, View } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-  },
+  container: {},
   stripeListWrapper: {
     width: '100%',
     paddingLeft: 27,
@@ -34,27 +29,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Stripe = ({
-  rightComponent,
-  leftComponent,
-  style,
-  disabled,
-  onPress,
-}) => (
+export const Stripe = ({ rightComponent, leftComponent, style, disabled, onPress }) => (
   <TouchableOpacity onPress={onPress} disabled={disabled}>
-    <View
-      style={[
-        styles.stripeListWrapper,
-        style,
-        { opacity: disabled ? 0.2 : 1 },
-      ]}
-    >
-      <View style={styles.stripeRight}>
-        {rightComponent}
-      </View>
-      <View style={styles.stripeLeft}>
-        {leftComponent}
-      </View>
+    <View style={[styles.stripeListWrapper, style, { opacity: disabled ? 0.2 : 1 }]}>
+      <View style={styles.stripeRight}>{rightComponent}</View>
+      <View style={styles.stripeLeft}>{leftComponent}</View>
     </View>
   </TouchableOpacity>
 );
@@ -88,22 +67,24 @@ export const StripeView = ({
         leftComponent={item[0]}
         rightComponent={item[1]}
         onPress={item[2]}
-        style={[(index % 2 === 0)
-          ? {
-            ...styles.stripeLight,
-            backgroundColor: stripeLightColor,
-          }
-          : {
-            ...styles.stripeDarkColor,
-            backgroundColor: stripeDarkColor,
-          },
-        { height: stripeHeight },
-        stripStyle,
+        style={[
+          index % 2 === 0
+            ? {
+                ...styles.stripeLight,
+                backgroundColor: stripeLightColor,
+              }
+            : {
+                ...styles.stripeDarkColor,
+                backgroundColor: stripeDarkColor,
+              },
+          { height: stripeHeight },
+          stripStyle,
         ]}
       />
     ))}
   </View>
 );
+
 StripeView.propTypes = {
   stripes: PropTypes.array.isRequired,
   stripeHeight: PropTypes.number,
@@ -112,6 +93,7 @@ StripeView.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   stripStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
 };
+
 StripeView.defaultProps = {
   stripeHeight: 36,
   stripeLightColor: '#202a51',
@@ -120,7 +102,4 @@ StripeView.defaultProps = {
   stripStyle: {},
 };
 
-export default {
-  StripeView,
-  Stripe,
-};
+export default StripeView;
