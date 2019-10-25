@@ -64,9 +64,9 @@ export const StripeView = ({
     {stripes.map((item, index) => (
       <Stripe
         key={index}
-        leftComponent={item[0]}
-        rightComponent={item[1]}
-        onPress={item[2]}
+        leftComponent={item.leftComponent}
+        rightComponent={item.rightComponent}
+        onPress={item.onPress}
         style={[
           index % 2 === 0
             ? {

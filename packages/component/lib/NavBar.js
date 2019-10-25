@@ -139,13 +139,11 @@ class NavBar extends Component {
       backIconSize,
       backIconName,
       backIconColor,
-      appRoute,
     } = this.props;
-    // console.log('appRoute=>', appRoute);
     if (typeof leftComponent === 'string') {
       switch (leftComponent.toUpperCase()) {
         case 'BACK':
-          if (Actions.prevScene || appRoute.prevRoute) {
+          if (Actions.prevScene) {
             return this.renderLeftBack({
               backIconType,
               backIconSize,

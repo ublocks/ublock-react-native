@@ -42,7 +42,7 @@ export default class RoundButton extends Component {
     numberOfLines: PropTypes.number,
     children: PropTypes.any,
     roundRadius: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-    translucent: PropTypes.bool,
+    transparent: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -70,7 +70,7 @@ export default class RoundButton extends Component {
     },
     children: null,
     roundRadius: Screen.scale(20),
-    translucent: false,
+    transparent: false,
   };
 
   constructor(props) {
@@ -99,7 +99,7 @@ export default class RoundButton extends Component {
       numberOfLines,
       children,
       roundRadius,
-      translucent,
+      transparent,
     } = this.props;
     return (
       <TouchableOpacity
@@ -108,7 +108,7 @@ export default class RoundButton extends Component {
           {
             opacity: disabled ? 0.2 : 1,
           },
-          translucent
+          transparent
             ? {
                 paddingLeft: 0,
                 paddingRight: 0,
