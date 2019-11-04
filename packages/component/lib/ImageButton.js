@@ -20,9 +20,9 @@ export default class ImageButton extends Component {
     disabled: PropTypes.bool,
     style: PropTypes.any,
     imageStyle: PropTypes.any,
-    height: PropTypes.any,
-    width: PropTypes.any,
-    source: PropTypes.any,
+    height: PropTypes.number,
+    width: PropTypes.number,
+    source: PropTypes.any.isRequired,
     blurRadius: PropTypes.number,
     resizeMode: PropTypes.string,
     imageWidth: PropTypes.number,
@@ -41,15 +41,15 @@ export default class ImageButton extends Component {
     transparent: true,
     //
     source: '',
-    resizeMode: 'center',
+    resizeMode: 'contain',
     blurRadius: 0,
     disabled: false,
-    height: 'auto',
-    width: 'auto',
+    height: 40,
+    width: 40,
     style: {},
     imageStyle: {},
-    imageWidth: 0,
-    imageHeight: 0,
+    imageWidth: null,
+    imageHeight: null,
   };
 
   constructor(props) {
@@ -89,6 +89,7 @@ export default class ImageButton extends Component {
             opacity: 1,
             height,
             width,
+            margin: 0,
           },
           style,
         ]}
@@ -110,8 +111,9 @@ export default class ImageButton extends Component {
             {
               justifyContent: 'center',
               alignItems: 'center',
-              height: imageHeight || Screen.verticalScale(height - 5),
-              width: imageWidth || Screen.scale(width - 5),
+              height: imageHeight ? Screen.verticalScale(imageHeight) : '100%',
+              width: imageWidth ? Screen.scale(imageWidth) : '100%',
+              padding: Screen.scale(4),
             },
             imageStyle,
           ]}

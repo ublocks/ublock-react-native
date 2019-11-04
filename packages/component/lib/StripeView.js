@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, StyleSheet, View } from 'react-native';
 
+import RoundButton from './RoundButton';
+
 const styles = StyleSheet.create({
   container: {},
   stripeListWrapper: {
@@ -22,20 +24,28 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   stripeLight: {
-    backgroundColor: '#202a51',
+    backgroundColor: 'white',
   },
   stripeDark: {
-    backgroundColor: '#121937',
+    backgroundColor: 'gray',
+  },
+  stripeButton: {
+    opacity: 1,
   },
 });
 
 export const Stripe = ({ rightComponent, leftComponent, style, disabled, onPress }) => (
-  <TouchableOpacity onPress={onPress} disabled={disabled}>
-    <View style={[styles.stripeListWrapper, style, { opacity: disabled ? 0.2 : 1 }]}>
+  <RoundButton
+    onPress={onPress}
+    disabled={typeof onPress !== 'function'}
+    transparent
+    style={styles.stripeButton}
+  >
+    <View style={[styles.stripeListWrapper, style]}>
       <View style={styles.stripeRight}>{rightComponent}</View>
       <View style={styles.stripeLeft}>{leftComponent}</View>
     </View>
-  </TouchableOpacity>
+  </RoundButton>
 );
 Stripe.propTypes = {
   rightComponent: PropTypes.object,
@@ -64,8 +74,8 @@ export const StripeView = ({
   <View style={[styles.container, style]}>
     {stripes.map((item, index) => (
       <Stripe
-        disabled={disabled}
         key={index}
+        disabled={disabled}
         leftComponent={item.leftComponent}
         rightComponent={item.rightComponent}
         onPress={item.onPress}
@@ -98,8 +108,8 @@ StripeView.propTypes = {
 
 StripeView.defaultProps = {
   stripeHeight: 36,
-  stripeLightColor: '#202a51',
-  stripeDarkColor: '#121937',
+  stripeLightColor: 'white',
+  stripeDarkColor: 'gray',
   style: {},
   stripStyle: {},
 };
