@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Image,
-} from 'react-native';
+import { Image } from 'react-native';
 
 import RoundButton from './RoundButton';
 
@@ -16,7 +14,8 @@ export default class ImageButton extends Component {
     delayLongPress: PropTypes.number,
     delayPressIn: PropTypes.number,
     delayPressOut: PropTypes.number,
-    // 
+    //
+    transparent: PropTypes.bool,
     disabled: PropTypes.bool,
     style: PropTypes.any,
     imageStyle: PropTypes.any,
@@ -25,6 +24,8 @@ export default class ImageButton extends Component {
     source: PropTypes.any,
     blurRadius: PropTypes.number,
     resizeMode: PropTypes.string,
+    imageWidth: PropTypes.number,
+    imageHeight: PropTypes.number,
   };
 
   static defaultProps = {
@@ -36,7 +37,8 @@ export default class ImageButton extends Component {
     delayLongPress: 400,
     delayPressIn: 200,
     delayPressOut: 200,
-    // 
+    transparent: true,
+    //
     source: '',
     resizeMode: 'center',
     blurRadius: 0,
@@ -45,31 +47,14 @@ export default class ImageButton extends Component {
     width: 'auto',
     style: {},
     imageStyle: {},
+    imageWidth: 0,
+    imageHeight: 0,
   };
 
   constructor(props) {
     super(props);
     this.state = {};
     this.btnClick = false;
-  }
-
-  handleOnPress = () => {
-    const {
-      disabled,
-      onPress,
-    } = this.props;
-
-    if (!disabled) {
-      if (!this.btnClick) {
-        this.btnClick = true;
-        if (onPress) {
-          onPress();
-        }
-        setTimeout(() => {
-          this.btnClick = false;
-        }, 100);
-      }
-    }
   }
 
   render() {
@@ -88,18 +73,24 @@ export default class ImageButton extends Component {
       source,
       disabled,
       imageStyle,
+      imageWidth,
+      imageHeight,
       resizeMode,
       blurRadius,
+      transparent,
     } = this.props;
     return (
       <RoundButton
-        style={[{
-          justifyContent: 'center',
-          alignItems: 'center',
-          opacity: 1,
-          height,
-          width,
-        }, style]}
+        style={[
+          {
+            justifyContent: 'center',
+            alignItems: 'center',
+            opacity: 1,
+            height,
+            width,
+          },
+          style,
+        ]}
         disabled={disabled || !onPress}
         onPress={onPress}
         onPressIn={onPressIn}
@@ -108,16 +99,21 @@ export default class ImageButton extends Component {
         delayPressIn={delayPressIn}
         delayPressOut={delayPressOut}
         delayLongPress={delayLongPress}
-        translucent
+        transparent={transparent}
       >
         <Image
           source={source}
           blurRadius={blurRadius}
           resizeMode={resizeMode}
-          style={[{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }, imageStyle]}
+          style={[
+            {
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: imageHeight || Screen.verticalScale(height - 5),
+              width: imageWidth || Screen.scale(width - 5),
+            },
+            imageStyle,
+          ]}
         />
       </RoundButton>
     );

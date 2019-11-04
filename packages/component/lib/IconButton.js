@@ -32,6 +32,7 @@ export default class IconButton extends Component {
     width: PropTypes.number,
     height: PropTypes.number,
     children: PropTypes.object,
+    transparent: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -46,6 +47,7 @@ export default class IconButton extends Component {
     width: Screen.scale(48),
     height: Screen.scale(48),
     children: null,
+    transparent: false,
   };
 
   constructor(props) {

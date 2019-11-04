@@ -59,10 +59,12 @@ export const StripeView = ({
   stripeDarkColor,
   style,
   stripStyle,
+  disabled,
 }) => (
   <View style={[styles.container, style]}>
     {stripes.map((item, index) => (
       <Stripe
+        disabled={disabled}
         key={index}
         leftComponent={item.leftComponent}
         rightComponent={item.rightComponent}
