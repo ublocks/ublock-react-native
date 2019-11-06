@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, TouchableOpacity } from 'react-native';
 import { isNumber, debounce } from 'lodash';
@@ -22,7 +22,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-export default class RoundButton extends Component {
+export default class RoundButton extends React.PureComponent {
   static propTypes = {
     onPress: PropTypes.func,
     onLongPress: PropTypes.func,
@@ -43,6 +43,8 @@ export default class RoundButton extends Component {
     children: PropTypes.any,
     roundRadius: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
     transparent: PropTypes.bool,
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   };
 
   static defaultProps = {
@@ -63,14 +65,16 @@ export default class RoundButton extends Component {
     textColor: 'black',
     textStyle: {},
     hitSlop: {
-      top: Screen.scale(5),
+      top: Screen.verticalScale(5),
+      bottom: Screen.verticalScale(5),
       left: Screen.scale(5),
       right: Screen.scale(5),
-      bottom: Screen.scale(5),
     },
     children: null,
-    roundRadius: Screen.scale(20),
+    roundRadius: 16,
     transparent: false,
+    width: '100%',
+    height: 32,
   };
 
   constructor(props) {
@@ -100,14 +104,13 @@ export default class RoundButton extends Component {
       children,
       roundRadius,
       transparent,
+      width,
+      height,
     } = this.props;
     return (
       <TouchableOpacity
         style={[
           styles.button,
-          {
-            opacity: disabled ? 0.2 : 1,
-          },
           transparent
             ? {
                 paddingLeft: 0,
@@ -121,10 +124,13 @@ export default class RoundButton extends Component {
             : {
                 backgroundColor: color,
                 borderColor: borderColor || color,
-                borderRadius: roundRadius
-                  ? Screen.scale(isNumber(roundRadius) ? roundRadius : 10)
-                  : 0,
+                borderRadius: isNumber(roundRadius) ? Screen.scale(roundRadius) : 0,
               },
+          {
+            opacity: disabled ? 0.2 : 1,
+            width: isNumber(width) ? Screen.scale(width) : width,
+            height: isNumber(height) ? Screen.verticalScale(height) : height,
+          },
           btnStyle,
         ]}
         onPress={disabled ? () => {} : debounce(onPress, 400)}

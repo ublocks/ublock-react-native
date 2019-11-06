@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 import { Screen, ScaledSheet } from '@ublocks-react-native/helper';
+
+import RoundButton from './RoundButton';
 
 const styles = ScaledSheet.create({
   button: {
@@ -15,11 +16,12 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     alignContent: 'center',
+    padding: '4@s',
     // marginTop: '2@vs',
   },
 });
 
-export default class IconButton extends Component {
+export default class IconButton extends React.PureComponent {
   static propTypes = {
     onPress: PropTypes.func,
     disabled: PropTypes.bool,
@@ -41,38 +43,18 @@ export default class IconButton extends Component {
     style: {},
     iconName: 'ion-md-person',
     iconType: 'Ionicons',
-    iconSize: Screen.scale(48),
+    iconSize: 24,
     iconColor: 'black',
     iconParams: {},
-    width: Screen.scale(48),
-    height: Screen.scale(48),
+    width: 32,
+    height: 32,
     children: null,
     transparent: false,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.btnClick = false;
-  }
-
-  handleOnPress = () => {
-    const { onPress, disabled } = this.props;
-    if (!disabled) {
-      if (!this.btnClick) {
-        this.btnClick = true;
-        if (onPress) {
-          onPress();
-        }
-        setTimeout(() => {
-          this.btnClick = false;
-        }, 200);
-      }
-    }
-  };
-
   render() {
     const {
+      onPress,
       style,
       iconName,
       iconType,
@@ -81,22 +63,27 @@ export default class IconButton extends Component {
       iconParams,
       width,
       height,
-
       disabled,
       children,
     } = this.props;
+    const scaledSize = Screen.scale(iconSize);
     const getIcon = () => {
       switch (iconType) {
         case 'Ionicons': {
           return (
-            <Ionicons name={iconName} size={iconSize} color={iconColor} {...iconParams} />
+            <Ionicons
+              name={iconName}
+              size={scaledSize}
+              color={iconColor}
+              {...iconParams}
+            />
           );
         }
         case 'Material': {
           return (
             <MaterialIcons
               name={iconName}
-              size={iconSize}
+              size={scaledSize}
               color={iconColor}
               {...iconParams}
             />
@@ -106,7 +93,7 @@ export default class IconButton extends Component {
           return (
             <FontAwesome
               name={iconName}
-              size={iconSize}
+              size={scaledSize}
               color={iconColor}
               {...iconParams}
             />
@@ -116,7 +103,7 @@ export default class IconButton extends Component {
           return (
             <FontAwesome5
               name={iconName}
-              size={iconSize}
+              size={scaledSize}
               color={iconColor}
               {...iconParams}
             />
@@ -127,14 +114,18 @@ export default class IconButton extends Component {
       }
     };
     return (
-      <TouchableOpacity
-        style={[styles.button, height, width, style]}
-        onPress={this.handleOnPress}
-        activeOpacity={disabled ? 1 : 0.2}
+      <RoundButton
+        {...this.props}
+        style={[styles.button, style]}
+        onPress={onPress}
+        height={height}
+        width={width}
+        disabled={disabled}
+        transparent
       >
         {getIcon()}
         {children}
-      </TouchableOpacity>
+      </RoundButton>
     );
   }
 }
