@@ -53,9 +53,9 @@ export default class RoundButton extends React.PureComponent {
     onPressIn: undefined,
     onPressOut: undefined,
     onLongPress: undefined,
-    delayLongPress: 400,
-    delayPressIn: 200,
-    delayPressOut: 200,
+    delayLongPress: undefined,
+    delayPressIn: undefined,
+    delayPressOut: undefined,
     numberOfLines: 1,
     disabled: false,
     borderColor: undefined,
@@ -133,7 +133,7 @@ export default class RoundButton extends React.PureComponent {
           },
           btnStyle,
         ]}
-        onPress={disabled ? () => {} : debounce(onPress, 400)}
+        onPress={disabled ? () => {} : debounce(onPress, 199)}
         activeOpacity={disabled ? 1 : 0.2}
         hitSlop={hitSlop}
         disabled={disabled}
