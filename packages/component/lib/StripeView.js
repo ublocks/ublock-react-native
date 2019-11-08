@@ -34,12 +34,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Stripe = ({ rightComponent, leftComponent, style, disabled, onPress }) => (
+export const Stripe = ({
+  rightComponent,
+  leftComponent,
+  style,
+  disabled,
+  onPress,
+  btnStyle,
+}) => (
   <RoundButton
     onPress={onPress}
     disabled={typeof onPress !== 'function'}
     transparent
-    style={styles.stripeButton}
+    style={[styles.stripeButton, btnStyle]}
   >
     <View style={[styles.stripeListWrapper, style]}>
       <View style={styles.stripeRight}>{rightComponent}</View>
@@ -53,11 +60,13 @@ Stripe.propTypes = {
   style: PropTypes.any,
   disabled: PropTypes.bool,
   onPress: PropTypes.func,
+  btnStyle: PropTypes.object,
 };
 Stripe.defaultProps = {
   rightComponent: null,
   leftComponent: null,
   style: {},
+  btnStyle: {},
   disabled: false,
   onPress: null,
 };
@@ -69,6 +78,7 @@ export const StripeView = ({
   stripeDarkColor,
   style,
   stripStyle,
+  buttonStyle,
   disabled,
 }) => (
   <View style={[styles.container, style]}>
@@ -92,6 +102,7 @@ export const StripeView = ({
           { height: stripeHeight },
           stripStyle,
         ]}
+        btnStyle={buttonStyle}
       />
     ))}
   </View>
