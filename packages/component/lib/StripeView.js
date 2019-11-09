@@ -1,24 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Screen, ScaledSheet } from '@ublocks-react-native/helper';
 
 import RoundButton from './RoundButton';
 
 const styles = StyleSheet.create({
-  container: {},
-  stripeListWrapper: {
+  container: {
+    flex: 1,
+  },
+  stripeWrapper: {
     width: '100%',
     paddingLeft: 27,
     paddingRight: 27,
     flexDirection: 'row-reverse',
-    height: 40,
+    flex: 1,
+    opacity: 1,
   },
   stripeRight: {
+    flex: 1,
     width: '50%',
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
   stripeLeft: {
+    flex: 1,
     width: '50%',
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -29,29 +35,17 @@ const styles = StyleSheet.create({
   stripeDark: {
     backgroundColor: 'gray',
   },
-  stripeButton: {
-    opacity: 1,
-  },
 });
 
-export const Stripe = ({
-  rightComponent,
-  leftComponent,
-  style,
-  disabled,
-  onPress,
-  btnStyle,
-}) => (
+export const Stripe = ({ rightComponent, leftComponent, style, disabled, onPress }) => (
   <RoundButton
     onPress={onPress}
     disabled={typeof onPress !== 'function'}
+    style={[styles.stripeWrapper, style]}
     transparent
-    style={[styles.stripeButton, btnStyle]}
   >
-    <View style={[styles.stripeListWrapper, style]}>
-      <View style={styles.stripeRight}>{rightComponent}</View>
-      <View style={styles.stripeLeft}>{leftComponent}</View>
-    </View>
+    <View style={styles.stripeRight}>{rightComponent}</View>
+    <View style={styles.stripeLeft}>{leftComponent}</View>
   </RoundButton>
 );
 Stripe.propTypes = {
@@ -60,13 +54,11 @@ Stripe.propTypes = {
   style: PropTypes.any,
   disabled: PropTypes.bool,
   onPress: PropTypes.func,
-  btnStyle: PropTypes.object,
 };
 Stripe.defaultProps = {
   rightComponent: null,
   leftComponent: null,
   style: {},
-  btnStyle: {},
   disabled: false,
   onPress: null,
 };
@@ -78,7 +70,6 @@ export const StripeView = ({
   stripeDarkColor,
   style,
   stripStyle,
-  buttonStyle,
   disabled,
 }) => (
   <View style={[styles.container, style]}>
@@ -99,10 +90,9 @@ export const StripeView = ({
                 ...styles.stripeDarkColor,
                 backgroundColor: stripeDarkColor,
               },
-          { height: stripeHeight },
+          { height: Screen.verticalScale(stripeHeight) },
           stripStyle,
         ]}
-        btnStyle={buttonStyle}
       />
     ))}
   </View>
@@ -114,7 +104,7 @@ StripeView.propTypes = {
   stripeLightColor: PropTypes.string,
   stripeDarkColor: PropTypes.string,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-  stripStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+  stripStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
 };
 
 StripeView.defaultProps = {
