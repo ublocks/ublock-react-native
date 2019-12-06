@@ -7,14 +7,12 @@ import { Screen, ScaledSheet } from '@ublocks-react-native/helper';
 
 const styles = ScaledSheet.create({
   button: {
-    // flex: 1,
-    paddingLeft: '12@s',
-    paddingRight: '12@s',
-    height: '40@s',
+    height: '48@s',
     borderWidth: Screen.onePixel * 2,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+    padding: '16@s',
   },
   buttonText: {
     color: '#000',
@@ -45,6 +43,7 @@ export default class RoundButton extends React.PureComponent {
     transparent: PropTypes.bool,
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    debounceTime: PropTypes.number,
   };
 
   static defaultProps = {
@@ -71,10 +70,11 @@ export default class RoundButton extends React.PureComponent {
       right: Screen.scale(5),
     },
     children: null,
-    roundRadius: 16,
+    roundRadius: 8,
     transparent: false,
     width: '100%',
-    height: 32,
+    height: 48,
+    debounceTime: 250,
   };
 
   constructor(props) {
@@ -106,6 +106,7 @@ export default class RoundButton extends React.PureComponent {
       transparent,
       width,
       height,
+      debounceTime,
     } = this.props;
     return (
       <TouchableOpacity
@@ -133,7 +134,7 @@ export default class RoundButton extends React.PureComponent {
           },
           btnStyle,
         ]}
-        onPress={disabled ? () => {} : debounce(onPress, 199)}
+        onPress={disabled ? () => {} : debounce(onPress, debounceTime)}
         activeOpacity={disabled ? 1 : 0.2}
         hitSlop={hitSlop}
         disabled={disabled}
