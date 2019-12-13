@@ -30,6 +30,8 @@ export default class RoundButton extends React.PureComponent {
     delayPressIn: PropTypes.number,
     delayPressOut: PropTypes.number,
     style: PropTypes.any,
+    justifyContent: PropTypes.string,
+    alignItems: PropTypes.string,
     color: PropTypes.string,
     text: PropTypes.string,
     textColor: PropTypes.string,
@@ -63,6 +65,8 @@ export default class RoundButton extends React.PureComponent {
     text: '',
     textColor: 'black',
     textStyle: {},
+    justifyContent: 'center',
+    alignItems: 'center',
     hitSlop: {
       top: Screen.verticalScale(5),
       bottom: Screen.verticalScale(5),
@@ -107,6 +111,8 @@ export default class RoundButton extends React.PureComponent {
       width,
       height,
       debounceTime,
+      justifyContent,
+      alignItems,
     } = this.props;
     return (
       <TouchableOpacity
@@ -131,6 +137,8 @@ export default class RoundButton extends React.PureComponent {
             opacity: disabled ? 0.2 : 1,
             width: isNumber(width) ? Screen.scale(width) : width,
             height: isNumber(height) ? Screen.verticalScale(height) : height,
+            justifyContent,
+            alignItems,
           },
           btnStyle,
         ]}
