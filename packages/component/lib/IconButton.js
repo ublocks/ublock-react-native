@@ -26,7 +26,7 @@ export default class IconButton extends React.PureComponent {
     onPress: PropTypes.func,
     disabled: PropTypes.bool,
     style: PropTypes.any,
-    iconName: PropTypes.string,
+    iconName: PropTypes.string.isRequired,
     iconType: PropTypes.oneOf(['Ionicons', 'Material', 'FontAwesome', 'FontAwesome5']),
     iconSize: PropTypes.number,
     iconColor: PropTypes.string,
