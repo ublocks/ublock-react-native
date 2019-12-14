@@ -23,7 +23,7 @@ const styles = ScaledSheet.create({
     width: Screen.scale(100),
     height: Screen.scale(100),
     borderRadius: Screen.scale(10),
-    backgroundColor: 'rgba(100,100,100,0.5)',
+    backgroundColor: 'rgba(10,10,10,0.5)',
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
@@ -42,6 +42,9 @@ const styles = ScaledSheet.create({
     textAlign: 'center',
   },
 });
+
+const BACKGROUND_COLOR = 'rgba(100,100,100,0.5)';
+const BACKGROUND_COLOR_DARK = 'rgba(20,20,20,0.5)';
 
 export default class LoadingIndicator extends React.PureComponent {
   static propTypes = {
@@ -67,9 +70,9 @@ export default class LoadingIndicator extends React.PureComponent {
         style={[
           styles.loadingContent,
           { width, height },
-          !cover && { backgroundColor: 'rgba(100,100,100,0.5)' },
+          !cover && { backgroundColor: BACKGROUND_COLOR_DARK },
         ]}
-        animation="fadeIn"
+        animation="fadeInDown"
         duration={250}
       >
         <View
@@ -80,7 +83,9 @@ export default class LoadingIndicator extends React.PureComponent {
           ]}
         >
           <ActivityIndicator size="large" color={'white'} />
-          {text && <Text style={styles.txtLoadingMessage}>{text}</Text>}
+          {typeof text === 'string' && text.length > 0 && (
+            <Text style={styles.txtLoadingMessage}>{text}</Text>
+          )}
         </View>
       </Animatable.View>
     );
@@ -91,8 +96,8 @@ export default class LoadingIndicator extends React.PureComponent {
     return (
       <LinearGradient
         style={[styles.loadingContent, { width, height }]}
-        colors={['rgba(100,100,100,0.5)', '#ffffff00']}
-        start={{ x: 0, y: 0.8 }}
+        colors={[BACKGROUND_COLOR, '#ffffff00']}
+        start={{ x: 0, y: 0.9 }}
         end={{ x: 0, y: 1 }}
       >
         {this.renderIndicator()}
