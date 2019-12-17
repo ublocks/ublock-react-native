@@ -40,6 +40,7 @@ const styles = ScaledSheet.create({
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
+    marginHorizontal: Screen.scale(16),
   },
 });
 
