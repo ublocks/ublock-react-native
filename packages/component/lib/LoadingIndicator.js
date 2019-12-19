@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as Animatable from 'react-native-animatable';
-import { ActivityIndicator, View, Text } from 'react-native';
+import { ActivityIndicator, BackHandler, View, Text } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Screen, ScaledSheet } from '@ublocks-react-native/helper';
 
@@ -47,25 +47,70 @@ const styles = ScaledSheet.create({
 const BACKGROUND_COLOR = 'rgba(100,100,100,0.5)';
 const BACKGROUND_COLOR_DARK = 'rgba(20,20,20,0.5)';
 
+let countTimer = null;
+
 export default class LoadingIndicator extends React.PureComponent {
   static propTypes = {
-    text: PropTypes.string,
     open: PropTypes.bool,
     cover: PropTypes.bool,
+    text: PropTypes.string,
+    countdown: PropTypes.bool,
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   };
 
   static defaultProps = {
     text: '',
-    open: false,
     cover: true,
+    open: false,
+    countdown: false,
     width: Screen.width,
     height: Screen.height,
   };
 
+  static getDerivedStateFromProps(props, state) {
+    if (!props.open && state.count !== 0) {
+      return {
+        count: 0,
+      };
+    }
+    return null;
+  }
+
+  state = {
+    count: 0,
+  };
+
+  componentDidMount() {
+    // Android "Back" button trigger event listener
+    if (Platform.OS === 'android') {
+      BackHandler.addEventListener('hardwareBackPress', this.onAndroidBackButtonPressed);
+    }
+
+    countTimer = setInterval(() => {
+      this.setState((state) => ({
+        count: state.count + 1,
+      }));
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    // Android "Back" button trigger event listener
+    if (Platform.OS === 'android') {
+      BackHandler.removeEventListener(
+        'hardwareBackPress',
+        this.onAndroidBackButtonPressed,
+      );
+    }
+  }
+
+  onAndroidBackButtonPressed = () => {
+    return true;
+  };
+
   renderIndicator = () => {
-    const { text, cover, width, height } = this.props;
+    const { text, cover, width, height, countdown } = this.props;
+    const { count } = this.state;
     return (
       <Animatable.View
         style={[
@@ -73,7 +118,7 @@ export default class LoadingIndicator extends React.PureComponent {
           { width, height },
           !cover && { backgroundColor: BACKGROUND_COLOR_DARK },
         ]}
-        animation="fadeInDown"
+        animation={cover ? 'fadeInDown' : 'fadeIn'}
         duration={250}
       >
         <View
@@ -87,6 +132,7 @@ export default class LoadingIndicator extends React.PureComponent {
           {typeof text === 'string' && text.length > 0 && (
             <Text style={styles.txtLoadingMessage}>{text}</Text>
           )}
+          {countdown && <Text style={styles.txtLoadingMessage}>{count}</Text>}
         </View>
       </Animatable.View>
     );
