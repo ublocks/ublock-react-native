@@ -7,12 +7,11 @@ import { Screen, ScaledSheet } from '@ublocks-react-native/helper';
 
 const styles = ScaledSheet.create({
   button: {
-    height: '48@s',
+    height: '48@vs',
     borderWidth: Screen.onePixel * 2,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: '16@s',
   },
   buttonText: {
     color: '#000',
