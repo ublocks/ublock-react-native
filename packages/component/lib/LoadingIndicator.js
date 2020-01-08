@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as Animatable from 'react-native-animatable';
-import { ActivityIndicator, BackHandler, View, Text } from 'react-native';
+import {
+  TouchableWithoutFeedback,
+  ActivityIndicator,
+  BackHandler,
+  View,
+  Text,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Screen, ScaledSheet } from '@ublocks-react-native/helper';
 
@@ -16,7 +22,8 @@ const styles = ScaledSheet.create({
     height: Screen.height,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent',
+    // backgroundColor: 'transparent',
+    backgroundColor: BACKGROUND_COLOR,
     zIndex: Number.MAX_SAFE_INTEGER,
   },
   loadingCover: {
@@ -57,6 +64,7 @@ export default class LoadingIndicator extends React.PureComponent {
     countdown: PropTypes.bool,
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    onLongPress: PropTypes.func,
   };
 
   static defaultProps = {
@@ -66,6 +74,7 @@ export default class LoadingIndicator extends React.PureComponent {
     countdown: false,
     width: Screen.width,
     height: Screen.height,
+    onLongPress: () => {},
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -139,16 +148,18 @@ export default class LoadingIndicator extends React.PureComponent {
   };
 
   renderLinearGradient = () => {
-    const { width, height } = this.props;
+    const { width, height, onLongPress } = this.props;
     return (
-      <LinearGradient
-        style={[styles.loadingContent, { width, height }]}
-        colors={[BACKGROUND_COLOR, '#ffffff00']}
-        start={{ x: 0, y: 0.9 }}
-        end={{ x: 0, y: 1 }}
-      >
-        {this.renderIndicator()}
-      </LinearGradient>
+      <TouchableWithoutFeedback onLongPress={onLongPress}>
+        <LinearGradient
+          style={[styles.loadingContent, { width, height }]}
+          colors={[BACKGROUND_COLOR, '#ffffff00']}
+          // start={{ x: 0, y: 1 }}
+          // end={{ x: 0, y: 1 }}
+        >
+          {this.renderIndicator()}
+        </LinearGradient>
+      </TouchableWithoutFeedback>
     );
   };
 
