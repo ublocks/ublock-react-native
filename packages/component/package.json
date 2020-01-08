@@ -1,6 +1,6 @@
 {
   "name": "@ublocks-react-native/component",
-  "version": "1.0.2-alpha.17",
+  "version": "1.0.2-alpha.18",
   "author": "Kent Chen",
   "description": "The component collection of ublocks",
   "main": "lib/index.js",
@@ -34,8 +34,8 @@
     "lib": "lib"
   },
   "dependencies": {
+    "lodash": "^4.17.15",
     "react-native-linear-gradient": "^2.5.6",
-    "react-native-reanimated": "^1.4.0",
-    "lodash": "^4.17.15"
+    "react-native-reanimated": "^1.4.0"
   }
 }
