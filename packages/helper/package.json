@@ -15,7 +15,7 @@
     "react-native"
   ],
   "peerDependencies": {
-    "react-native-size-matters": "^0.2.1"
+    "react-native-size-matters": "^0.3.0"
   },
   "devDependencies": {
     "prop-types": "*",
