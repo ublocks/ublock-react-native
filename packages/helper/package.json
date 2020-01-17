@@ -23,11 +23,11 @@
     "react-native": "*"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
   },
   "gitHead": "0f4f3d5aed323894139bc4e74e5e6cf3823b84cd",
   "dependencies": {
     "lodash": "^4.17.15"
-  },
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
+  }
 }
