@@ -93,7 +93,10 @@ export default class LoadingIndicator extends React.PureComponent {
   componentDidMount() {
     // Android "Back" button trigger event listener
     if (Platform.OS === 'android') {
-      BackHandler.addEventListener('hardwareBackPress', this.onAndroidBackButtonPressed);
+      this.backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        this.onAndroidBackButtonPressed,
+      );
     }
 
     countTimer = setInterval(() => {
@@ -106,10 +109,7 @@ export default class LoadingIndicator extends React.PureComponent {
   componentWillUnmount() {
     // Android "Back" button trigger event listener
     if (Platform.OS === 'android') {
-      BackHandler.removeEventListener(
-        'hardwareBackPress',
-        this.onAndroidBackButtonPressed,
-      );
+      this.backHandler.remove();
     }
   }
 
