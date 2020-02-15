@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'debounce-async';
 import { Text, TouchableOpacity } from 'react-native';
-import { isNumber, debounce } from 'lodash';
+import { isNumber } from 'lodash';
 
 import { Screen, ScaledSheet } from '@ublocks-react-native/helper';
 
@@ -82,9 +83,23 @@ export default class RoundButton extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = {};
-    // this.btnClick = false;
+    this.state = {
+      locked: false,
+    };
   }
+
+  handleOnPress = () => {
+    const { onPress, disabled, debounceTime } = this.props;
+    if (disabled) {
+      return () => {};
+    }
+    this.setState({ locked: true }, () => {
+      setTimeout(() => {
+        this.setState({ locked: false });
+      }, debounceTime / 2);
+    });
+    return debounce(onPress, debounceTime);
+  };
 
   render() {
     const {
@@ -113,6 +128,7 @@ export default class RoundButton extends React.PureComponent {
       justifyContent,
       alignItems,
     } = this.props;
+    const { locked } = this.state;
     return (
       <TouchableOpacity
         style={[
@@ -141,10 +157,10 @@ export default class RoundButton extends React.PureComponent {
           },
           btnStyle,
         ]}
-        onPress={disabled ? () => {} : debounce(onPress, debounceTime)}
+        onPress={this.handleOnPress()}
         activeOpacity={disabled ? 1 : 0.2}
         hitSlop={hitSlop}
-        disabled={disabled}
+        disabled={disabled || locked}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
         onLongPress={onLongPress}
