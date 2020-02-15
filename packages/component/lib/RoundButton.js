@@ -103,7 +103,6 @@ export default class RoundButton extends React.PureComponent {
 
   render() {
     const {
-      onPress,
       onPressIn,
       onPressOut,
       onLongPress,
@@ -124,7 +123,6 @@ export default class RoundButton extends React.PureComponent {
       transparent,
       width,
       height,
-      debounceTime,
       justifyContent,
       alignItems,
     } = this.props;
