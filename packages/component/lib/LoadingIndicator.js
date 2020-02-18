@@ -65,6 +65,7 @@ export default class LoadingIndicator extends React.PureComponent {
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onLongPress: PropTypes.func,
+    dismissDelay: PropTypes.number,
   };
 
   static defaultProps = {
@@ -75,6 +76,7 @@ export default class LoadingIndicator extends React.PureComponent {
     width: Screen.width,
     height: Screen.height,
     onLongPress: () => {},
+    dismissDelay: 1000,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -83,11 +85,17 @@ export default class LoadingIndicator extends React.PureComponent {
         count: 0,
       };
     }
+    if (props.open && props.open !== state.open) {
+      return {
+        open: true,
+      };
+    }
     return null;
   }
 
   state = {
     count: 0,
+    open: false,
   };
 
   componentDidMount() {
@@ -106,6 +114,17 @@ export default class LoadingIndicator extends React.PureComponent {
     }, 1000);
   }
 
+  componentDidUpdate(prevProps) {
+    const { open, dismissDelay } = this.props;
+    if (!open && prevProps.open !== open) {
+      setTimeout(() => {
+        this.setState({
+          open: false,
+        });
+      }, dismissDelay);
+    }
+  }
+
   componentWillUnmount() {
     // Android "Back" button trigger event listener
     if (Platform.OS === 'android') {
@@ -118,7 +137,7 @@ export default class LoadingIndicator extends React.PureComponent {
   };
 
   renderIndicator = () => {
-    const { text, cover, width, height, countdown } = this.props;
+    const { text, cover, width, height, countdown, dismissDelay } = this.props;
     const { count } = this.state;
     return (
       <Animatable.View
@@ -127,8 +146,9 @@ export default class LoadingIndicator extends React.PureComponent {
           { width, height },
           !cover && { backgroundColor: BACKGROUND_COLOR_DARK },
         ]}
-        animation={cover ? 'fadeInDown' : 'fadeIn'}
-        duration={250}
+        animation={cover ? 'fadeOut' : 'fadeIn'}
+        duration={dismissDelay}
+        useNativeDriver
       >
         <View
           style={[
@@ -151,20 +171,23 @@ export default class LoadingIndicator extends React.PureComponent {
     const { width, height, onLongPress } = this.props;
     return (
       <TouchableWithoutFeedback onLongPress={onLongPress}>
-        <LinearGradient
+        {/* <LinearGradient
           style={[styles.loadingContent, { width, height }]}
           colors={[BACKGROUND_COLOR, '#ffffff00']}
           // start={{ x: 0, y: 1 }}
           // end={{ x: 0, y: 1 }}
         >
           {this.renderIndicator()}
-        </LinearGradient>
+        </LinearGradient> */}
+
+        {this.renderIndicator()}
       </TouchableWithoutFeedback>
     );
   };
 
   render() {
-    const { cover, open } = this.props;
+    const { cover } = this.props;
+    const { open } = this.state;
     return open && (cover ? this.renderLinearGradient() : this.renderIndicator());
   }
 }
