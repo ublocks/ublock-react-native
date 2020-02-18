@@ -1,6 +1,6 @@
 {
   "name": "@ublocks-react-native/component",
-  "version": "1.0.2-alpha.24",
+  "version": "1.0.2-alpha.25",
   "author": "Kent Chen",
   "description": "The component collection of ublocks",
   "main": "lib/index.js",
