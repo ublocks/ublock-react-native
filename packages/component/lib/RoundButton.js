@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import debounce from 'debounce-async';
 import { Text, TouchableOpacity } from 'react-native';
-import { isNumber } from 'lodash';
+import { isNumber, debounce } from 'lodash';
 
 import { Screen, ScaledSheet } from '@ublocks-react-native/helper';
 
@@ -46,6 +45,7 @@ export default class RoundButton extends React.PureComponent {
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     debounceTime: PropTypes.number,
+    debounceTime: PropTypes.number,
   };
 
   static defaultProps = {
@@ -78,7 +78,7 @@ export default class RoundButton extends React.PureComponent {
     transparent: false,
     width: '100%',
     height: 48,
-    debounceTime: 250,
+    debounceTime: 150,
   };
 
   constructor(props) {
@@ -88,17 +88,17 @@ export default class RoundButton extends React.PureComponent {
     };
   }
 
-  handleOnPress = () => {
+  handleOnPress = (e) => {
     const { onPress, disabled, debounceTime } = this.props;
     if (disabled) {
       return () => {};
     }
-    this.setState({ locked: true }, () => {
+    return this.setState({ locked: true }, () => {
       setTimeout(() => {
         this.setState({ locked: false });
       }, debounceTime / 2);
+      return onPress(e);
     });
-    return debounce(onPress, debounceTime);
   };
 
   render() {
@@ -125,6 +125,7 @@ export default class RoundButton extends React.PureComponent {
       height,
       justifyContent,
       alignItems,
+      debounceTime,
     } = this.props;
     const { locked } = this.state;
     return (
@@ -155,7 +156,7 @@ export default class RoundButton extends React.PureComponent {
           },
           btnStyle,
         ]}
-        onPress={this.handleOnPress()}
+        onPress={debounce(this.handleOnPress, debounceTime)}
         activeOpacity={disabled ? 1 : 0.2}
         hitSlop={hitSlop}
         disabled={disabled || locked}
