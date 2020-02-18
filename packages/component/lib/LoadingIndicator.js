@@ -140,15 +140,15 @@ export default class LoadingIndicator extends React.PureComponent {
     const { text, cover, width, height, countdown, dismissDelay } = this.props;
     const { count } = this.state;
     return (
-      <Animatable.View
+      <View
         style={[
           styles.loadingContent,
           { width, height },
           !cover && { backgroundColor: BACKGROUND_COLOR_DARK },
         ]}
-        animation={cover ? 'fadeOut' : 'fadeIn'}
-        duration={dismissDelay}
-        useNativeDriver
+        // animation={cover ? (open?'fadeIn':'fadeOut'): 'fadeIn'}
+        // duration={dismissDelay}
+        // useNativeDriver
       >
         <View
           style={[
@@ -163,7 +163,7 @@ export default class LoadingIndicator extends React.PureComponent {
           )}
           {countdown && <Text style={styles.txtLoadingMessage}>{count}</Text>}
         </View>
-      </Animatable.View>
+      </View>
     );
   };
 
