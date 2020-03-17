@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, View, ViewPropTypes, StatusBar, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -50,7 +50,7 @@ const styles = ScaledSheet.create({
     height: '100%',
     flex: 1.5,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     alignSelf: 'center',
   },
@@ -58,7 +58,7 @@ const styles = ScaledSheet.create({
     height: '100%',
     flex: 1.5,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     alignSelf: 'center',
   },
@@ -67,7 +67,7 @@ const styles = ScaledSheet.create({
   },
 });
 
-class NavBar extends Component {
+class NavBar extends React.PureComponent {
   static propTypes = {
     drawerStatus: PropTypes.string,
     numberOfLines: PropTypes.number,
@@ -78,7 +78,12 @@ class NavBar extends Component {
     titleColor: PropTypes.string,
     titleStyle: PropTypes.any,
     style: ViewPropTypes.style,
-    statusbarStyle: PropTypes.oneOf(['default', 'light-content', 'dark-content']),
+    statusbarStyle: PropTypes.oneOf([
+      'default',
+      'light-content',
+      'dark-content',
+      undefined,
+    ]),
     statusbarHidden: PropTypes.bool,
     statusbarAnimated: PropTypes.bool,
     statusbarTranslucent: PropTypes.bool,
@@ -106,7 +111,7 @@ class NavBar extends Component {
     titleComponent: null,
     numberOfLines: 1,
     style: {},
-    statusbarStyle: 'default',
+    statusbarStyle: undefined,
     statusbarHidden: false,
     statusbarAnimated: true,
     statusbarTranslucent: false,
