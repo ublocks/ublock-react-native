@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, TouchableOpacity } from 'react-native';
-import { isNumber, debounce } from 'lodash';
+import { isNumber, throttle } from 'lodash';
 
 import { Screen, ScaledSheet } from '@ublocks-react-native/helper';
 
@@ -44,8 +44,7 @@ export default class RoundButton extends React.PureComponent {
     transparent: PropTypes.bool,
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    debounceTime: PropTypes.number,
-    debounceTime: PropTypes.number,
+    throttleTime: PropTypes.number,
   };
 
   static defaultProps = {
@@ -78,7 +77,7 @@ export default class RoundButton extends React.PureComponent {
     transparent: false,
     width: '100%',
     height: 48,
-    debounceTime: 150,
+    throttleTime: 1500,
   };
 
   constructor(props) {
@@ -89,16 +88,21 @@ export default class RoundButton extends React.PureComponent {
   }
 
   handleOnPress = (e) => {
-    const { onPress, disabled, debounceTime } = this.props;
-    if (disabled) {
-      return () => {};
+    const { onPress, disabled, throttleTime } = this.props;
+    const { locked } = this.state;
+    if (disabled || locked) {
+      return false;
     }
-    return this.setState({ locked: true }, () => {
-      setTimeout(() => {
-        this.setState({ locked: false });
-      }, debounceTime / 2);
-      return onPress(e);
-    });
+    requestAnimationFrame(onPress);
+    this.setState(
+      () => ({ locked: true }),
+      () => {
+        // this.forceUpdate();
+        setTimeout(() => {
+          this.setState({ locked: false });
+        }, throttleTime);
+      },
+    );
   };
 
   render() {
@@ -125,11 +129,14 @@ export default class RoundButton extends React.PureComponent {
       height,
       justifyContent,
       alignItems,
-      debounceTime,
+      throttleTime,
+      onPress,
+      ...props
     } = this.props;
     const { locked } = this.state;
     return (
       <TouchableOpacity
+        {...props}
         style={[
           styles.button,
           transparent
@@ -148,7 +155,7 @@ export default class RoundButton extends React.PureComponent {
                 borderRadius: isNumber(roundRadius) ? Screen.scale(roundRadius) : 0,
               },
           {
-            opacity: disabled ? 0.2 : 1,
+            opacity: disabled || locked ? 0.2 : 1,
             width: isNumber(width) ? Screen.scale(width) : width,
             height: isNumber(height) ? Screen.verticalScale(height) : height,
             justifyContent,
@@ -156,8 +163,8 @@ export default class RoundButton extends React.PureComponent {
           },
           btnStyle,
         ]}
-        onPress={debounce(this.handleOnPress, debounceTime)}
-        activeOpacity={disabled ? 1 : 0.2}
+        onPress={throttle(this.handleOnPress, throttleTime)}
+        activeOpacity={disabled || locked ? 1 : 0.2}
         hitSlop={hitSlop}
         disabled={disabled || locked}
         onPressIn={onPressIn}
