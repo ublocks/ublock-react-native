@@ -127,7 +127,7 @@ export default class LoadingIndicator extends React.PureComponent {
 
   componentWillUnmount() {
     // Android "Back" button trigger event listener
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' && this.backHandler) {
       this.backHandler.remove();
     }
   }

@@ -86,7 +86,6 @@ export default class ImageButton extends Component {
           {
             justifyContent: 'center',
             alignItems: 'center',
-            opacity: 1,
             height,
             width,
             margin: 0,
