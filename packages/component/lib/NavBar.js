@@ -10,6 +10,7 @@ import { Screen, ScaledSheet } from '@ublocks-react-native/helper';
 const styles = ScaledSheet.create({
   container: {
     flexDirection: 'row',
+    backgroundColor: 'white',
     paddingHorizontal: '15@s',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -78,6 +79,8 @@ class NavBar extends React.PureComponent {
     titleColor: PropTypes.string,
     titleStyle: PropTypes.any,
     style: ViewPropTypes.style,
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    statusBar: PropTypes.bool,
     statusbarStyle: PropTypes.oneOf([
       'default',
       'light-content',
@@ -99,6 +102,11 @@ class NavBar extends React.PureComponent {
     nextIconSize: PropTypes.number,
     nextIconName: PropTypes.string,
     nextIconColor: PropTypes.string,
+
+    // route props from RNRF
+    routeName: PropTypes.string,
+    initialRouteName: PropTypes.string,
+    initial: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -111,6 +119,8 @@ class NavBar extends React.PureComponent {
     titleComponent: null,
     numberOfLines: 1,
     style: {},
+    height: Screen.scale(48),
+    statusBar: false,
     statusbarStyle: undefined,
     statusbarHidden: false,
     statusbarAnimated: true,
@@ -118,14 +128,19 @@ class NavBar extends React.PureComponent {
     statusbarBackgroundColor: 'black',
     backIconType: 'Ionicons',
     backIconSize: 26,
-    backIconColor: 'white',
+    backIconColor: 'dodgerblue',
     backIconName: 'ios-arrow-back',
     backIconText: 'Back',
     nextIconText: 'Next',
     nextIconType: 'Ionicons',
     nextIconSize: 26,
-    nextIconColor: 'white',
+    nextIconColor: 'dodgerblue',
     nextIconName: 'ios-arrow-forward',
+
+    // route props from RNRF
+    routeName: '',
+    initialRouteName: '',
+    initial: false,
   };
 
   onMenuPress = () => {
@@ -144,11 +159,12 @@ class NavBar extends React.PureComponent {
       backIconSize,
       backIconName,
       backIconColor,
+      initial,
     } = this.props;
     if (typeof leftComponent === 'string') {
       switch (leftComponent.toUpperCase()) {
         case 'BACK':
-          if (Actions.prevScene) {
+          if (Actions.prevScene && !initial) {
             return this.renderLeftBack({
               backIconType,
               backIconSize,
@@ -205,7 +221,7 @@ class NavBar extends React.PureComponent {
     backIconColor,
   }) => (
     <IconButton
-      onPress={Actions.pop}
+      onPress={() => Actions.pop()}
       style={styles.navButton}
       iconName={backIconName}
       iconType={backIconType}
@@ -231,7 +247,7 @@ class NavBar extends React.PureComponent {
       text: nextIconText,
     }),
     <IconButton
-      onPress={Actions.pop}
+      onPress={() => Actions.pop()}
       style={styles.navButton}
       iconName={nextIconName}
       iconType={nextIconType}
@@ -246,7 +262,7 @@ class NavBar extends React.PureComponent {
       iconType="FontAwesome5"
       iconSize={Screen.scale(32)}
       style={styles.navButton}
-      onPress={Actions.drawerOpen}
+      onPress={() => Actions.drawerOpen()}
     />
   );
 
@@ -256,16 +272,20 @@ class NavBar extends React.PureComponent {
       titleColor,
       titleStyle,
       titleComponent,
+      height,
       rightComponent,
       leftComponent,
+      statusBar,
       statusbarStyle,
       statusbarHidden,
       statusbarAnimated,
       statusbarTranslucent,
       statusbarBackgroundColor,
+      routeName,
+      initialRouteName,
     } = this.props;
     return (
-      <View style={[styles.container, this.props.style]}>
+      <View style={[styles.container, this.props.style, { height }]}>
         <StatusBar
           hidden={statusbarHidden}
           barStyle={statusbarStyle}
@@ -280,7 +300,7 @@ class NavBar extends React.PureComponent {
               numberOfLines={this.props.numberOfLines}
               style={[styles.titleText, { color: titleColor }, titleStyle]}
             >
-              {title}
+              {title || routeName || initialRouteName}
             </Text>
           )}
         </View>
