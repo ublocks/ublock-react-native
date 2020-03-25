@@ -85,6 +85,13 @@ export default class RoundButton extends React.PureComponent {
     this.state = {
       locked: false,
     };
+    this.lockTimer = null;
+  }
+
+  componentWillUnmount() {
+    if (this.lockTimer) {
+      clearTimeout(this.lockTimer);
+    }
   }
 
   handleOnPress = (e) => {
@@ -98,7 +105,8 @@ export default class RoundButton extends React.PureComponent {
       () => ({ locked: true }),
       () => {
         // this.forceUpdate();
-        setTimeout(() => {
+        clearTimeout(this.lockTimer);
+        this.lockTimer = setTimeout(() => {
           this.setState({ locked: false });
         }, throttleTime);
       },
