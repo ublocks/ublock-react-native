@@ -82,6 +82,7 @@ export default class ImageButton extends Component {
     } = this.props;
     return (
       <RoundButton
+        {...this.props}
         style={[
           {
             justifyContent: 'center',

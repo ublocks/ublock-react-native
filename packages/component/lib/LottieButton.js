@@ -108,6 +108,7 @@ export default class LottieButton extends React.Component {
     } = this.props;
     return (
       <RoundButton
+        {...this.props}
         onPress={onPress}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
