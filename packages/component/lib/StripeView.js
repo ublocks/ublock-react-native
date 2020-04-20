@@ -19,13 +19,13 @@ const styles = StyleSheet.create({
   },
   stripeRight: {
     flex: 1,
-    width: '50%',
+    // width: '50%',
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
   stripeLeft: {
     flex: 1,
-    width: '50%',
+    // width: '50%',
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
@@ -37,20 +37,30 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Stripe = ({ rightComponent, leftComponent, style, disabled, onPress }) => (
+export const Stripe = ({
+  rightComponent,
+  leftComponent,
+  style,
+  stripeRightStyle,
+  stripeLeftStyle,
+  disabled,
+  onPress,
+}) => (
   <RoundButton
     onPress={onPress}
     disabled={typeof onPress !== 'function'}
     style={[styles.stripeWrapper, style]}
     transparent
   >
-    <View style={styles.stripeRight}>{rightComponent}</View>
-    <View style={styles.stripeLeft}>{leftComponent}</View>
+    <View style={[styles.stripeRight, stripeRightStyle]}>{rightComponent}</View>
+    <View style={[styles.stripeLeft, stripeLeftStyle]}>{leftComponent}</View>
   </RoundButton>
 );
 Stripe.propTypes = {
   rightComponent: PropTypes.object,
   leftComponent: PropTypes.object,
+  stripeRightStyle: PropTypes.any,
+  stripeLeftStyle: PropTypes.any,
   style: PropTypes.any,
   disabled: PropTypes.bool,
   onPress: PropTypes.func,
@@ -58,6 +68,8 @@ Stripe.propTypes = {
 Stripe.defaultProps = {
   rightComponent: null,
   leftComponent: null,
+  stripeRightStyle: {},
+  stripeLeftStyle: {},
   style: {},
   disabled: false,
   onPress: null,
@@ -66,8 +78,12 @@ Stripe.defaultProps = {
 export const StripeView = ({
   stripes,
   stripeHeight,
+  stripeDividerColor,
+  stripeDividerWidth,
   stripeLightColor,
   stripeDarkColor,
+  stripeRightStyle,
+  stripeLeftStyle,
   style,
   stripStyle,
   disabled,
@@ -77,6 +93,8 @@ export const StripeView = ({
       <Stripe
         key={index}
         disabled={disabled}
+        stripeRightStyle={stripeRightStyle}
+        stripeLeftStyle={stripeLeftStyle}
         leftComponent={item.leftComponent}
         rightComponent={item.rightComponent}
         onPress={item.onPress}
@@ -91,6 +109,11 @@ export const StripeView = ({
                 backgroundColor: stripeDarkColor,
               },
           { height: Screen.verticalScale(stripeHeight) },
+          index + 1 < stripes.length && {
+            borderBottomColor: stripeDividerColor,
+            borderBottomWidth: stripeDividerWidth,
+            borderBottomStyle: 'solid',
+          },
           stripStyle,
         ]}
       />
@@ -101,16 +124,25 @@ export const StripeView = ({
 StripeView.propTypes = {
   stripes: PropTypes.array.isRequired,
   stripeHeight: PropTypes.number,
+
+  stripeDividerColor: PropTypes.number,
+  stripeDividerWidth: PropTypes.number,
   stripeLightColor: PropTypes.string,
   stripeDarkColor: PropTypes.string,
+  stripeRightStyle: PropTypes.any,
+  stripeLeftStyle: PropTypes.any,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   stripStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.number]),
 };
 
 StripeView.defaultProps = {
   stripeHeight: 36,
+  stripeDividerColor: 'white',
+  stripeDividerWidth: 0.5,
   stripeLightColor: 'white',
   stripeDarkColor: 'gray',
+  stripeRightStyle: {},
+  stripeLeftStyle: {},
   style: {},
   stripStyle: {},
 };

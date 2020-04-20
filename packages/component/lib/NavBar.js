@@ -11,10 +11,10 @@ const styles = ScaledSheet.create({
   container: {
     flexDirection: 'row',
     backgroundColor: 'white',
-    paddingHorizontal: '15@s',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 'auto',
+    justifyContent: 'center',
+    // height: 'auto',
     flex: 0,
     width: '100%',
   },
@@ -41,7 +41,7 @@ const styles = ScaledSheet.create({
   },
   centerBlock: {
     height: '100%',
-    flex: 7,
+    flex: 0.5,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -49,19 +49,17 @@ const styles = ScaledSheet.create({
   },
   leftBlock: {
     height: '100%',
-    flex: 1.5,
+    flex: 0.25,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    alignSelf: 'center',
   },
   rightBlock: {
     height: '100%',
-    flex: 1.5,
+    flex: 0.25,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    alignSelf: 'center',
   },
   icon: {
     padding: '3@s',
