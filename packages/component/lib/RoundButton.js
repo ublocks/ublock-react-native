@@ -45,6 +45,7 @@ export default class RoundButton extends React.PureComponent {
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     throttleTime: PropTypes.number,
+    disabledOpacity: PropTypes.number,
   };
 
   static defaultProps = {
@@ -58,6 +59,7 @@ export default class RoundButton extends React.PureComponent {
     delayPressOut: undefined,
     numberOfLines: 1,
     disabled: false,
+    disabledOpacity: 0.2,
     borderColor: undefined,
     color: 'gray',
     style: {},
@@ -139,6 +141,7 @@ export default class RoundButton extends React.PureComponent {
       alignItems,
       throttleTime,
       onPress,
+      disabledOpacity,
       ...props
     } = this.props;
     const { locked } = this.state;
@@ -163,7 +166,7 @@ export default class RoundButton extends React.PureComponent {
                 borderRadius: isNumber(roundRadius) ? Screen.scale(roundRadius) : 0,
               },
           {
-            opacity: disabled || locked ? 0.2 : 1,
+            opacity: disabled || locked ? disabledOpacity : 1,
             width: isNumber(width) ? Screen.scale(width) : width,
             height: isNumber(height) ? Screen.verticalScale(height) : height,
             justifyContent,

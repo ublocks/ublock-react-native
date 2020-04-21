@@ -124,8 +124,7 @@ export const StripeView = ({
 StripeView.propTypes = {
   stripes: PropTypes.array.isRequired,
   stripeHeight: PropTypes.number,
-
-  stripeDividerColor: PropTypes.number,
+  stripeDividerColor: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   stripeDividerWidth: PropTypes.number,
   stripeLightColor: PropTypes.string,
   stripeDarkColor: PropTypes.string,
